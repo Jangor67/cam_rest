@@ -11,6 +11,7 @@ picam.configure(picam_config)
 def serve_image():
     exposureTime = request.args.get('exposureTime')
     analogueGain = request.args.get('analogueGain')
+    lensPosition = request.args.get('lensPosition')
 
     controls = {}
     # Voeg alleen geldige waarden toe aan de controls
@@ -29,11 +30,21 @@ def serve_image():
         try:
             analogueGain = float(analogueGain)
             # Voorbeeld bereik, afhankelijk van je camera
-            if not (1.0 <= analogueGain <= 10.0):  
-                return jsonify({'error': 'analogueGain out of range'}), 400
+            if not (1.0 <= analogueGain <= 16.0):  
+                return jsonify({'error': 'analogueGain range is from 1.0 until 16.0 '}), 400
             controls["AnalogueGain"] = analogueGain
         except ValueError:
             return jsonify({'error': 'analogueGain must be a float'}), 400
+
+    if lensPosition is not None:
+        try:
+            lensPosition = float(lensPosition)
+            # Voorbeeld bereik, afhankelijk van je camera
+            if not (0.0 <= lensPosition <= 1.0):  
+                return jsonify({'error': 'lensPosition must be between 0.0 (far away) and 1.0 (closeby)'}), 400
+            controls["LensPosition"] = lensPosition
+        except ValueError:
+            return jsonify({'error': 'lensPosition must be a float'}), 400
 
     if controls:
       try:
