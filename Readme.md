@@ -42,8 +42,14 @@ systemctl list-units --state=failed
 journalctl -fu cam.service
 
 sudo systemctl daemon-reload
+sudo systemctl restart cam
+```
 
+```
 sudo systemctl start cam
 sudo systemctl stop cam
-sudo systemctl restart cam
+```
+
+```
+curl "http://localhost:8000/image?lensPosition=0&analogueGain=10.0&exposureTime=1000000" --output $(date +"%Y_%m_%d_%H%M")_image.jpg
 ```
