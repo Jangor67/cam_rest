@@ -44,7 +44,7 @@ def serve_image():
             exposureTime = int(exposureTime)
             # Optionele controles op bereik
             # Pas bereik aan naar wat geschikt is voor je camera
-            if not (0 <= exposureTime <= 2000000):
+            if not (0 <= exposureTime <= 3000000):
                 return jsonify({'error': 'exposureTime out of range'}), 400
             controls["ExposureTime"] = exposureTime
         except ValueError:
